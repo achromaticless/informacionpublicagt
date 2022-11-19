@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "next": "13.0.0",
+    "rc-textarea": "^0.4.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.6.0",
+    "react-select": "^5.6.1"
   },
   "devDependencies": {
     "@types/node": "18.11.8",
