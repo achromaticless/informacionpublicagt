@@ -2,12 +2,7 @@ import Head from "next/head";
 import React, { useState } from "react";
 import Select from "react-select";
 import styles from "../styles/Home.module.css";
-import {
-  FormStatePlaceHolders,
-  RequestLabel,
-  TEXT_KIND,
-  VIEWS,
-} from "../types/enums";
+import { FormStatePlaceHolders, RequestLabel, VIEWS } from "../types/enums";
 import { FormState, RequestState } from "../types/interfaces";
 import { useForm } from "../hooks/useForm";
 import Form from "./components/form";
@@ -25,26 +20,28 @@ const governmentAgencies = [
 ];
 
 export default function Home() {
-  const { form, setForm } = useForm();
+  const { form, handleUpdateForm } = useForm();
   const { request, setRequest } = useRequest();
   const { currentView, handleViewChange } = useViewChange();
-  const [currentGovAgency, setCurrentGovAgency] = useState();
+  const [currentGovAgency, setCurrentGovAgency] = useState<string>("");
 
   const handleGovernmentAgencyEmail = (event: any) => {
     setCurrentGovAgency(event.value);
-    setForm((form) => {
-      const { email } = form;
-      return {
-        ...form,
-        email: {
-          ...email,
-          value: event.value,
-        },
-      };
-    });
+    handleUpdateForm(event.value, "email");
     if (event.value !== "") {
       handleViewChange(VIEWS.FORM);
     }
+  };
+
+  const handleGenerateEmail = () => {
+    const enter = `%0D%0A`;
+    const emailTemplate = `Estimado ${currentGovAgency},${enter}${enter} Mi nombre es ${form.name.value} y me identifico el con numero de Documento Personal de Identificacion -DPI- ${form.dpi.value}`;
+    const messageToShow =
+      `${emailTemplate} ${form.description.value}${enter}${enter} saludos,`.replaceAll(
+        " ",
+        "%20"
+      );
+    window.location.href = `mailto:${form.email.value}?subject=Queja ${form.name.value}&body=${messageToShow}`;
   };
 
   return (
@@ -100,6 +97,7 @@ export default function Home() {
         <Form
           governmentAgencyEmail={currentGovAgency}
           viewChange={handleViewChange}
+          handleGenerateEmail={handleGenerateEmail}
         >
           {Object.entries(form).map(([key, value]) => (
             <Input<FormState>
@@ -110,13 +108,7 @@ export default function Home() {
               placeHolder={FormStatePlaceHolders[key as keyof FormState]}
               type={value.type}
               handleChange={(currentKey, newValue) =>
-                setForm({
-                  ...form,
-                  [currentKey]: {
-                    type: value.type,
-                    value: newValue,
-                  },
-                })
+                handleUpdateForm(newValue, currentKey)
               }
             />
           ))}

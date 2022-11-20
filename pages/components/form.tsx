@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useForm } from "../../hooks/useForm";
 import styles from "../../styles/Home.module.css";
 import { VIEWS } from "../../types/enums";
 
@@ -6,6 +7,7 @@ interface FormPros {
   children: React.ReactNode;
   governmentAgencyEmail?: string;
   viewChange: (newView: VIEWS) => void;
+  handleGenerateEmail: () => void;
 }
 
 export default function Form(props: FormPros) {
@@ -34,7 +36,12 @@ export default function Form(props: FormPros) {
       </div>
       <div className={styles.inputs}>{props.children}</div>
       <div className={styles.actions}>
-        <button className={styles.dark_button}>Generar correo</button>
+        <button
+          className={styles.dark_button}
+          onClick={() => props.handleGenerateEmail()}
+        >
+          Generar correo
+        </button>
       </div>
     </div>
   );

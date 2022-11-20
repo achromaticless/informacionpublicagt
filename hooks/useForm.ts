@@ -24,5 +24,18 @@ export const useForm = () => {
 
   const [form, setForm] = useState<FormState>(initialFormState);
 
-  return { form, setForm };
+  const handleUpdateForm = (value: string, key: keyof FormState) => {
+    setForm((form) => {
+      const currentKey = form[key];
+      return {
+        ...form,
+        [key]: {
+          ...currentKey,
+          value: value,
+        },
+      };
+    });
+  };
+
+  return { form, handleUpdateForm };
 };
