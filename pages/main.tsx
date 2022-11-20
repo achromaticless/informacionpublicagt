@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import { VIEWS } from ".";
 import styles from "../styles/Home.module.css";
+import { VIEWS } from "../types/enums";
 
 interface MainProps {
   children: React.ReactNode;

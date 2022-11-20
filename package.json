@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@floating-ui/react-dom": "^1.0.1",
     "next": "13.0.0",
     "rc-textarea": "^0.4.6",
     "react": "18.2.0",

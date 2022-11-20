@@ -2,12 +2,7 @@ import Textarea from "rc-textarea";
 import { useState } from "react";
 import { BiCopy } from "react-icons/bi";
 import styles from "../../styles/Home.module.css";
-
-export enum TEXT_KIND {
-  INPUT = "input",
-  TEXTAREA = "textarea",
-}
-
+import { TEXT_KIND } from "../../types/enums";
 export interface InputProps<T> {
   value: string;
   state: T;
